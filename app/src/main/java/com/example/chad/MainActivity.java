@@ -340,156 +340,157 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toContinueDialoag(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(R.string.gps_location);
-        builder.setMessage(message);
+            builder.setTitle(R.string.gps_location);
+            builder.setMessage(message);
 
-        builder.setPositiveButton(R.string.con, new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.con, new DialogInterface.OnClickListener() {
 
-            public void onClick(DialogInterface dialog, int which) {
-                switch (answer_code) {
-                    case "CHAD4A": {
-                        if (extras != null) {
-                            if (extras.containsKey("FILENAME")) {
-                                JSONObject object_answers = null;
-                                JSONArray array_results = null;
-                                JSONObject object1 = null;
-                                try {
-                                    object_answers = new JSONObject(string_object_answers);
-                                    array_results = object_answers.getJSONArray("results");
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (answer_code) {
+                        case "CHAD4A": {
+                            if (extras != null) {
+                                if (extras.containsKey("FILENAME")) {
+                                    JSONObject object_answers = null;
+                                    JSONArray array_results = null;
+                                    JSONObject object1 = null;
+                                    try {
+                                        object_answers = new JSONObject(string_object_answers);
+                                        array_results = object_answers.getJSONArray("results");
 
-                                    JSONObject jsonObject = new JSONObject();
-                                    jsonObject.put("code", "CHAD4");
-                                    jsonObject.put("answer_code", answer_code);
-                                    jsonObject.put("comment", "None");
+                                        JSONObject jsonObject = new JSONObject();
+                                        jsonObject.put("code", "CHAD4");
+                                        jsonObject.put("answer_code", answer_code);
+                                        jsonObject.put("comment", "None");
 
-                                    for(int i=0; i<array_results.length(); i++){
-                                        object1 = array_results.getJSONObject(i);
-                                        if(object1.getString("code").equals("CHAD4")){
-                                            array_results.remove(i);
-                                            array_results.put(i, jsonObject);
-                                            break;
+                                        for (int i = 0; i < array_results.length(); i++) {
+                                            object1 = array_results.getJSONObject(i);
+                                            if (object1.getString("code").equals("CHAD4")) {
+                                                array_results.remove(i);
+                                                array_results.put(i, jsonObject);
+                                                break;
+                                            }
                                         }
+                                        filling.writeToFile("ResultArray", array_results.toString(), MainActivity.this);
+                                        Intent intent = new Intent(MainActivity.this, Part29.class);
+                                        intent.putExtra("FILENAME", filename);
+                                        intent.putExtra("ANSWERS", string_object_answers);
+                                        startActivity(intent);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                    filling.writeToFile("ResultArray", array_results.toString(), MainActivity.this);
+                                } else {
+                                    general.AddObjectToResultArray("CHAD4", answer_code, MainActivity.this);
                                     Intent intent = new Intent(MainActivity.this, Part29.class);
-                                    intent.putExtra("FILENAME", filename);
-                                    intent.putExtra("ANSWERS", string_object_answers);
                                     startActivity(intent);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
-                            }else{
+                            } else {
                                 general.AddObjectToResultArray("CHAD4", answer_code, MainActivity.this);
                                 Intent intent = new Intent(MainActivity.this, Part29.class);
                                 startActivity(intent);
                             }
-                        }else{
-                            general.AddObjectToResultArray("CHAD4", answer_code, MainActivity.this);
-                            Intent intent = new Intent(MainActivity.this, Part29.class);
-                            startActivity(intent);
+                            break;
                         }
-                        break;
-                    }
-                    case "CHAD4B": {
-                        if (extras != null) {
-                            if (extras.containsKey("FILENAME")) {
-                                JSONObject object_answers = null;
-                                JSONArray array_results = null;
-                                JSONObject object1 = null;
-                                try {
-                                    object_answers = new JSONObject(string_object_answers);
-                                    array_results = object_answers.getJSONArray("results");
+                        case "CHAD4B": {
+                            if (extras != null) {
+                                if (extras.containsKey("FILENAME")) {
+                                    JSONObject object_answers = null;
+                                    JSONArray array_results = null;
+                                    JSONObject object1 = null;
+                                    try {
+                                        object_answers = new JSONObject(string_object_answers);
+                                        array_results = object_answers.getJSONArray("results");
 
-                                    JSONObject jsonObject = new JSONObject();
-                                    jsonObject.put("code", "CHAD4");//change this
-                                    jsonObject.put("answer_code", answer_code);
-                                    jsonObject.put("comment", "None");
+                                        JSONObject jsonObject = new JSONObject();
+                                        jsonObject.put("code", "CHAD4");//change this
+                                        jsonObject.put("answer_code", answer_code);
+                                        jsonObject.put("comment", "None");
 
-                                    for(int i=0; i<array_results.length(); i++){
-                                        object1 = array_results.getJSONObject(i);
-                                        if(object1.getString("code").equals("CHAD4")){//change this
-                                            array_results.remove(i);
-                                            array_results.put(i, jsonObject);
-                                            break;
+                                        for (int i = 0; i < array_results.length(); i++) {
+                                            object1 = array_results.getJSONObject(i);
+                                            if (object1.getString("code").equals("CHAD4")) {//change this
+                                                array_results.remove(i);
+                                                array_results.put(i, jsonObject);
+                                                break;
+                                            }
                                         }
+                                        filling.writeToFile("ResultArray", array_results.toString(), MainActivity.this);
+                                        Intent intent = new Intent(MainActivity.this, Part2.class);
+                                        intent.putExtra("FILENAME", filename);
+                                        intent.putExtra("ANSWERS", string_object_answers);
+                                        startActivity(intent);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                    filling.writeToFile("ResultArray", array_results.toString(), MainActivity.this);
+                                } else {
+                                    general.AddObjectToResultArray("CHAD4", answer_code, MainActivity.this);
                                     Intent intent = new Intent(MainActivity.this, Part2.class);
-                                    intent.putExtra("FILENAME", filename);
-                                    intent.putExtra("ANSWERS", string_object_answers);
                                     startActivity(intent);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
-                            }else {
+                            } else {
                                 general.AddObjectToResultArray("CHAD4", answer_code, MainActivity.this);
                                 Intent intent = new Intent(MainActivity.this, Part2.class);
                                 startActivity(intent);
                             }
-                        }else{
-                            general.AddObjectToResultArray("CHAD4", answer_code, MainActivity.this);
-                            Intent intent = new Intent(MainActivity.this, Part2.class);
-                            startActivity(intent);
+                            break;
                         }
-                        break;
-                    }
-                    case "CHAD4C": {
-                        if (extras != null) {
-                            if (extras.containsKey("FILENAME")) {
-                                JSONObject object_answers = null;
-                                JSONArray array_results = null;
-                                JSONObject object1 = null;
-                                try {
-                                    object_answers = new JSONObject(string_object_answers);
-                                    array_results = object_answers.getJSONArray("results");
+                        case "CHAD4C": {
+                            if (extras != null) {
+                                if (extras.containsKey("FILENAME")) {
+                                    JSONObject object_answers = null;
+                                    JSONArray array_results = null;
+                                    JSONObject object1 = null;
+                                    try {
+                                        object_answers = new JSONObject(string_object_answers);
+                                        array_results = object_answers.getJSONArray("results");
 
-                                    JSONObject jsonObject = new JSONObject();
-                                    jsonObject.put("code", "CHAD4");//change this
-                                    jsonObject.put("answer_code", answer_code);
-                                    jsonObject.put("comment", "None");
+                                        JSONObject jsonObject = new JSONObject();
+                                        jsonObject.put("code", "CHAD4");//change this
+                                        jsonObject.put("answer_code", answer_code);
+                                        jsonObject.put("comment", "None");
 
-                                    for(int i=0; i<array_results.length(); i++){
-                                        object1 = array_results.getJSONObject(i);
-                                        if(object1.getString("code").equals("CHAD4")){//change this
-                                            array_results.remove(i);
-                                            array_results.put(i, jsonObject);
-                                            break;
+                                        for (int i = 0; i < array_results.length(); i++) {
+                                            object1 = array_results.getJSONObject(i);
+                                            if (object1.getString("code").equals("CHAD4")) {//change this
+                                                array_results.remove(i);
+                                                array_results.put(i, jsonObject);
+                                                break;
+                                            }
                                         }
-                                    }
-                                    filling.writeToFile("ResultArray", array_results.toString(), MainActivity.this);
-                                    Intent intent = new Intent(MainActivity.this, Part29.class);
-                                    intent.putExtra("FILENAME", filename);
-                                    intent.putExtra("ANSWERS", string_object_answers);
-                                    startActivity(intent);
-                                } catch (JSONException e) {
+                                        filling.writeToFile("ResultArray", array_results.toString(), MainActivity.this);
+                                        Intent intent = new Intent(MainActivity.this, Part29.class);
+                                        intent.putExtra("FILENAME", filename);
+                                        intent.putExtra("ANSWERS", string_object_answers);
+                                        startActivity(intent);
+                                    } catch (JSONException e) {
 
-                                    e.printStackTrace();
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    general.AddObjectToResultArray("CHAD4", answer_code, MainActivity.this);
+                                    Intent intent = new Intent(MainActivity.this, Part24.class);
+                                    startActivity(intent);
                                 }
-                            }else{
+                            } else {
                                 general.AddObjectToResultArray("CHAD4", answer_code, MainActivity.this);
                                 Intent intent = new Intent(MainActivity.this, Part24.class);
                                 startActivity(intent);
                             }
-                        }else{
-                            general.AddObjectToResultArray("CHAD4", answer_code, MainActivity.this);
-                            Intent intent = new Intent(MainActivity.this, Part24.class);
-                            startActivity(intent);
+                            break;
                         }
-                        break;
+                        default: {
+                            general.AddObjectToResultArray("CHAD4", other.toString(), MainActivity.this);
+                            Intent intent = new Intent(MainActivity.this, End.class);
+                            startActivity(intent);
+                            break;
+                        }
                     }
-                    default: {
-                        general.AddObjectToResultArray("CHAD4", other.toString(), MainActivity.this);
-                        Intent intent = new Intent(MainActivity.this, End.class);
-                        startActivity(intent);
-                        break;
-                    }
+                    dialog.dismiss();
                 }
-                dialog.dismiss();
-            }
 
-        });
+            });
 
 /*        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
@@ -500,8 +501,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        AlertDialog alert = builder.create();
-        alert.show();
+            AlertDialog alert = builder.create();
+            alert.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void getLastKnownLocation() {

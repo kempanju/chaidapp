@@ -218,11 +218,20 @@ public class Dashboard extends AppCompatActivity {
                         @Override
                         public void onStart() {
                             super.onStart();
-                            p.show();
+                            try {
+                                p.show();
+                            }catch (Exception e){
+
+                            }
                         }
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            p.hide();
+                            try {
+                                p.hide();
+
+                            }catch (Exception e){
+
+                            }
                             try {
                                 String resuldata = new String(responseBody, "UTF-8");
                                 Log.d("splashAccessToken: ", resuldata);

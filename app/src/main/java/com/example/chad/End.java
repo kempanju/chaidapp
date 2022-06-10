@@ -403,8 +403,10 @@ public class End extends AppCompatActivity {
                         }
                         try {
                             if(general.isNetworkAvailable(End.this)){
+                                Log.i("mkapa","passed netwokk");
                                 general.saveData(End.this);
                             }else{
+
                                 JSONObject object = new JSONObject(general.getFile("MainObject", End.this));
                                 String respondent = object.getString("respondent");
                                 JSONObject house_hold = object.getJSONObject("house_hold");
@@ -418,6 +420,8 @@ public class End extends AppCompatActivity {
 
                         } catch (UnsupportedEncodingException | JSONException e) {
                             saveDialog();
+                            e.printStackTrace();
+                        } catch (Exception e){
                             e.printStackTrace();
                         }
                     }

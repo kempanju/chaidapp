@@ -49,10 +49,10 @@ public class General {
     public General(Context context){
         this.context = context;
     }
-    public String url = "http://chaid.mkapafoundation.or.tz/api/";
-    //public String url = "http://172.20.10.5:9090/api/";
+    //public String url = "http://chaid.mkapafoundation.or.tz/api/";
+    public String url = "http://172.20.10.2:9090/api/";
 
-    public String version_number = "5.2";
+    public String version_number = "5.3";
 
     public boolean isNetworkAvailable(Context ctx){
         ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);

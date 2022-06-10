@@ -3,6 +3,7 @@ package com.example.chad;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
@@ -108,12 +109,27 @@ public class Filling {
 
     public void saveFileToFolderContext(String filename, String data, Context context){
         try {
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Answers/";    // it will return root directory of internal storage
-            File root = new File(path);
+            File root = null;
+            String path = null;
+            if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                path = "";
+                root = new File(context.getFilesDir(), "Answers");
+            } else {
+                path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Answers/";    // it will return root directory of internal storage
+
+                root = new File(path);
+
+            }
+
             if (!root.exists()) {
                 root.mkdirs();       // create folder if not exist
             }
-            File file = new File(path + filename);
+
+            path = root.getAbsolutePath()+"/"+filename;
+            Log.i("mkapa","passed netwokk "+path);
+
+
+            File file = new File(path);
             if (!file.exists()) {
                 file.createNewFile();  // create file if not exist
             }

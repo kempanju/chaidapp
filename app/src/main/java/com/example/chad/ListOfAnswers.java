@@ -50,6 +50,8 @@ public class ListOfAnswers extends AppCompatActivity {
     EditText search;
     ArrayAdapter<String> itemsAdapter;
 
+    String fileMainPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +66,15 @@ public class ListOfAnswers extends AppCompatActivity {
         btn_upload = (Button) findViewById(R.id.btn_upload);
         String Title = "Orodha ya taarifa";
         actionBar.setTitle(Html.fromHtml("<font color='#FFFFFF'>"+ Title +" </font>"));
-        File yourDir = new File(Environment.getExternalStorageDirectory().getPath() + "/Answers/");
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+
+            File root = new File(this.getFilesDir(), "Answers");
+            fileMainPath = root.getAbsolutePath()+"/";
+        } else {
+            fileMainPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Answers/";    // it will return root directory of internal storage
+        }
+        File yourDir = new File(fileMainPath);
+
         if(yourDir.listFiles() != null){
             for (File f : yourDir.listFiles()) {
                 if (f.isFile())
@@ -90,6 +100,8 @@ public class ListOfAnswers extends AppCompatActivity {
             }
 
         });
+
+
 
 
         listView = (ListView) findViewById(R.id.list);
@@ -141,7 +153,7 @@ public class ListOfAnswers extends AppCompatActivity {
         builder.setPositiveButton(R.string.send, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                File yourDir = new File(Environment.getExternalStorageDirectory().getPath() + "/Answers/");
+                File yourDir = new File(fileMainPath);
                 File file = null;
                 StringBuilder text;
                 if(yourDir.listFiles() != null){
@@ -190,7 +202,8 @@ public class ListOfAnswers extends AppCompatActivity {
     }
 
     public void editDialog(final String filename) {
-        final String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Answers/";
+
+        final String path =fileMainPath;
         general = new General(ListOfAnswers.this);
         AlertDialog.Builder builder = new AlertDialog.Builder(ListOfAnswers.this);
 
@@ -259,7 +272,7 @@ public class ListOfAnswers extends AppCompatActivity {
         }).setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                File yourDir = new File(Environment.getExternalStorageDirectory().getPath() + "/Answers/");
+                File yourDir = new File(fileMainPath);
 
                 File fdelete = new File(yourDir+"/"+filename);
                 if (fdelete.exists()) {
